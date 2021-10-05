@@ -6,9 +6,18 @@
 
     <!-- External CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" type="text/css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,300;0,600;1,300;1,600&display=swap" rel="stylesheet">
 
     <!-- App CSS -->
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <link rel="stylesheet" href ="/styles/nav.css" type="text/css"/>
+    <link rel="stylesheet" href ="/styles/header.css" type="text/css"/>
+    <link rel="stylesheet" href ="/styles/tweetform.css" type="text/css"/>
 
     <!-- External JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -20,10 +29,35 @@
   <body>
     <!-- Top nav bar (fixed) -->
     <nav>
-      <span>tweeter</span>
+      <span id="logo">tweeter</span>
+      <span class="nav-info"><strong>Write a new tweet</strong></span>
     </nav>
-
+    <header>
+      <div class="avatar">
+        <img src="/images/profile-hex.png"> 
+      </div>
+      <div class="name">
+        <h2>Darlene Smith</h2>
+      </div>
+    </header>
     <!-- Page-specific (main) content here -->
-    <main class="container"></main>
+    <main class="container">
+      <section class="new-tweet">
+        <br>
+        <form method="POST" action="/tweets">
+          <label for="tweet-text">Whats on your mind?</label>
+          <textarea name="text" id="tweet-text"></textarea>
+          <div class="form-details">
+            <button type="submit">Tweet</button>
+            <output name="counter" class="counter" for="tweet-text">140</output>
+          </div>
+        </form>
+      </section>
+    </main>
   </body>
 </html>
+
+<!-- to do:
+1. move tweeter down to align with write tweet NAV
+2. add font awesome double arrow down underneath write tweet NAV
+6. style form better (move 140 undernaeth) -->

@@ -1,0 +1,22 @@
+nav {
+  height: 120px;
+  background-color: lightsalmon;
+  color: snow;
+  width: 100vw;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  z-index: 1;
+  position: absolute;
+}
+
+#logo {
+  font-family: 'Bungee', sans-serif;
+  font-size: 48px;
+  display: flex;
+  
+}
+
+.nav-info {
+  display: flex;
+  justify-content: flex-end;
+}
