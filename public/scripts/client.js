@@ -4,42 +4,6 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
-
-const data = [
-  {
-    "user": {
-      "name": "Newton",
-      "avatars": "https://i.imgur.com/73hZDYK.png"
-      ,
-      "handle": "@SirIsaac"
-    },
-    "content": {
-      "text": "If I have seen further it is by standing on the shoulders of giants"
-    },
-    "created_at": 1461116232227
-  },
-  {
-    "user": {
-      "name": "Descartes",
-      "avatars": "https://i.imgur.com/nlhLi3I.png",
-      "handle": "@rd" },
-    "content": {
-      "text": "Je pense , donc je suis"
-    },
-    "created_at": 1461113959088
-  },
-  {
-    "user": {
-      "name": "Wayne Gretzky",
-      "avatars": "https://i.imgur.com/nlhLi3I.png",
-      "handle": "@#99" },
-    "content": {
-      "text": "You miss 100% of the shots you dont take."
-    },
-    "created_at": 1461113959088
-  }
-]
-
 $(document).ready(function() {
   $("#error-char").hide();
   $("#error-blank").hide();
@@ -48,7 +12,7 @@ $(document).ready(function() {
     const sortedTweets = tweets.sort((a,b) => b.created_at - a.created_at);
     for (const tweet of sortedTweets) {
       $(".tweets-container").append(createTweetElement(tweet));
-    }
+    };
   }
   
   const createTweetElement = function(tweetObj) {
@@ -84,6 +48,7 @@ $(document).ready(function() {
       method: "GET"
     })
     .then((success) => { //If promise is resolved (is successfull) unrwapre promise object to return success value. Will be the tweets from the /tweest page. WE CAN NOW PASS THIS INTO THE renderTweets function as data (via return sucess;) AND CREATE TWEETS FROM OUR DB.
+      $('.tweets-container').empty(); //this makes the DOM Re-render to feed into the renderTweets
       renderTweets(success); //best practice call the function in the .then if u wanna carry over data. This will help you better error handle. ALso for some reason i could not pass loadTweets() in render
     }) // YOU NEED TO CALL RENDER TWEETS HERE BECUASE IF YOU PASS THIS INTO RENDER TWEETS OUTSIDE OF HTE FUNCTION THE SUCESS DATA WONT BE TRANSFERRED BACK OUT (THESE ARE ASYNCS)
     .catch((e) => {
@@ -93,23 +58,43 @@ $(document).ready(function() {
 
  loadTweets();
 
-  $("#tweet-submit").submit(function(event) {
+  $("form").submit(function(event) {
     event.preventDefault();
-    const characterCount = $(".counter").val();
+    const characterCounter = $(".counter").val();
     const textAreaMsg = $("#tweet-text").val();
 
-    if (characterCount < 0) {
-     return $("#error-char").show(500)
-    }
+    //error check
+    if (characterCounter < 0) {
+      $("#error-char").show(500);
+    } else if (textAreaMsg === "") {
+      $("#error-blank").show(500);
+    } else {
+      $("#error-char").hide(500);
+      $("#error-blank").hide(500);
 
-    if(textAreaMsg === "") {
-      return $("#error-blank").show(500)
-    }
+      const url = "http://localhost:8080/tweets";
+      const serialData = $(this).serialize();
 
-    const url = "http://localhost:8080/tweets";
-    const serialData = $("form").serialize();
-    $.post(url,serialData); //ajax request using jquery lib. You can also use .ajax({}) and pass in a obj -> see here for difference https://stackoverflow.com/questions/12820074/difference-between-post-and-ajax . .Ajax can be used as a promise as well.
-    location.reload(); 
-  })
+      $.ajax({ //ajax POST request using AJAX call and pormises.Will execute then on sucess. We dont even need to pass in "succes into then" =-> this is just a promise that will execute then if the post request above goes good. This is aying if post method is good loadtweets to empty tweet container and render tweets. THIS IS DONE EVERY POST, THEREFOR CREATING A SPA REFRESH/DYNAMIC REFRESH
+        url: url,
+        method: "POST",
+        data: serialData
+      })
+      .then((success) => { //on successfull POST call -> load the tweets which means to call the load tweets function (which means to empty posted tweet + section tweet container html section + render your tweets agian with new tweet). THIS ALLOWS FOR DYNMIAC REFRESH IN AJAX
+        loadTweets(); 
+        $('#tweet-text').val(''); //this will clear your text field on POST
+        $('.counter').val("140"); //this will set your coutner back to 140 on POST ALL OF THIS STUFF WORKS TOGETHER TO MAKE A SPA LOOK DYNMIAC AND CREATE A DYNMIAC REFRESH OF TWEETS/DATA
+      })
+    }
+  });
 
 });
+
+// MENTOR CODE
+// $.ajax('/tweets', {method: "POST", data: serialData })  
+// .then(() => { 
+//   loadTweets(); 
+//   $('#tweet-text').val('');
+//   $('.counter').val("140");
+// });
+      
