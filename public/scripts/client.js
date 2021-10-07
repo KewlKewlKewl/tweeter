@@ -73,8 +73,15 @@ $(document).ready(function() {
     
     return $tweet;
   }
-
   renderTweets(data);
+
+  $("#tweet-submit").submit((event) => {
+    event.preventDefault()
+    const url = "http://localhost:8080/tweets"
+    const serialData = $("form").serialize();
+    console.log(serialData)
+    $.post(url,serialData); //ajax request using jquery lib. You can also use .ajax({}) and pass in a obj -> see here for difference https://stackoverflow.com/questions/12820074/difference-between-post-and-ajax . .Ajax can be used as a promise as well.
+  })
 });
 
 
