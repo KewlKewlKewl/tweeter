@@ -41,9 +41,12 @@ const data = [
 ]
 
 $(document).ready(function() {
-  
+  $("#error-char").hide();
+  $("#error-blank").hide();
+
   const renderTweets = function(tweets) {
-    for (const tweet of tweets) {
+    const sortedTweets = tweets.sort((a,b) => b.created_at - a.created_at);
+    for (const tweet of sortedTweets) {
       $(".tweets-container").append(createTweetElement(tweet));
     }
   }
@@ -96,16 +99,17 @@ $(document).ready(function() {
     const textAreaMsg = $("#tweet-text").val();
 
     if (characterCount < 0) {
-      return alert("You have entered in too many characters. Please clear up your message and try again!");
+     return $("#error-char").show(500)
     }
 
     if(textAreaMsg === "") {
-      return alert("You have entered a blank tweet. Tell us whats on your mind and try again!");
+      return $("#error-blank").show(500)
     }
 
     const url = "http://localhost:8080/tweets";
     const serialData = $("form").serialize();
     $.post(url,serialData); //ajax request using jquery lib. You can also use .ajax({}) and pass in a obj -> see here for difference https://stackoverflow.com/questions/12820074/difference-between-post-and-ajax . .Ajax can be used as a promise as well.
+    location.reload(); 
   })
 
 });

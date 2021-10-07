@@ -1,0 +1,22 @@
+#error-char {
+  color: tomato;
+  font-weight: bolder;
+  border-style: solid;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#error-blank {
+  color: tomato;
+  font-weight: bolder;
+  border-style: solid;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.fa-skull-crossbones {
+  padding-top: 25px;
+  font-size: xx-large;
+}

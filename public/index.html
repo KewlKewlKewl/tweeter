@@ -20,6 +20,7 @@
     <link rel="stylesheet" href ="/styles/header.css" type="text/css"/>
     <link rel="stylesheet" href ="/styles/tweetform.css" type="text/css"/>
     <link rel="stylesheet" href ="/styles/tweetdisplay.css" type="text/css"/>
+    <link rel="stylesheet" href ="/styles/errormsg.css" type="text/css"/>
 
     <!-- External JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -51,6 +52,17 @@
     <main class="container">
       <section class="tweets">
         <br>
+        <div id="error-char">
+          <i class="fas fa-skull-crossbones"></i>
+          <p>You have entered in too many characters. Please clear up your message and try again!</p>
+          <i class="fas fa-skull-crossbones"></i>
+        </div>
+        <div  id="error-blank">
+          <i class="fas fa-skull-crossbones"></i>
+          <p>You have entered a blank tweet. Please enter something and tell us whats on your mind!</p>
+          <i class="fas fa-skull-crossbones"></i>
+        </div>
+        <br>
         <form method="POST" action="/tweets" id="tweet-submit">
           <label for="tweet-text">What are you thinking?</label>
           <textarea name="text" id="tweet-text"></textarea>
@@ -61,13 +73,17 @@
         </form>
       <section class = "tweets-container">
       </section>
+      <br>
       </section>
     </main>
   </body>
 </html>
 
 <!-- to do:
-fix old tweet posting (tweetdisplay) -> make it look more like LHL exmaples and center your tweet and have it run left to rightnot in middle. Add image to user as well -->
+fix old tweet posting (tweetdisplay) -> make it look more like LHL exmaples and center your tweet and have it run left to rightnot in middle. Add image to user as well ADD UNERLINE 
+why does my header/nav bar  move on a reload? to the right???
+FIX VALIDATION ERROR MESSAGE (have it appear in and out on errors not stable)
+-->
 
 
 
