@@ -73,20 +73,39 @@ $(document).ready(function() {
     
     return $tweet;
   }
-  renderTweets(data);
 
-  $("#tweet-submit").submit((event) => {
-    event.preventDefault()
-    const url = "http://localhost:8080/tweets"
+  const loadTweets = function() {
+    const url = "http://localhost:8080/tweets";
+    $.ajax({ //this AJAX get request will return a promise object with a success or e (a resolved or rejected promise respectively). If resvoled, .then will be called to return/access the promise objects value (the success object which is a array of tweets). If not the catch e wil be called on the rejected promise to return/acess the error value
+      url: url,
+      method: "GET"
+    })
+    .then((success) => { //If promise is resolved (is successfull) unrwapre promise object to return success value. Will be the tweets from the /tweest page. WE CAN NOW PASS THIS INTO THE renderTweets function as data (via return sucess;) AND CREATE TWEETS FROM OUR DB.
+      renderTweets(success); //best practice call the function in the .then if u wanna carry over data. This will help you better error handle. ALso for some reason i could not pass loadTweets() in render
+    }) // YOU NEED TO CALL RENDER TWEETS HERE BECUASE IF YOU PASS THIS INTO RENDER TWEETS OUTSIDE OF HTE FUNCTION THE SUCESS DATA WONT BE TRANSFERRED BACK OUT (THESE ARE ASYNCS)
+    .catch((e) => {
+      return e;
+    });
+  }
+
+ loadTweets();
+
+  $("#tweet-submit").submit(function(event) {
+    event.preventDefault();
+    const characterCount = $(".counter").val();
+    const textAreaMsg = $("#tweet-text").val();
+
+    if (characterCount < 0) {
+      return alert("You have entered in too many characters. Please clear up your message and try again!");
+    }
+
+    if(textAreaMsg === "") {
+      return alert("You have entered a blank tweet. Tell us whats on your mind and try again!");
+    }
+
+    const url = "http://localhost:8080/tweets";
     const serialData = $("form").serialize();
-    console.log(serialData)
     $.post(url,serialData); //ajax request using jquery lib. You can also use .ajax({}) and pass in a obj -> see here for difference https://stackoverflow.com/questions/12820074/difference-between-post-and-ajax . .Ajax can be used as a promise as well.
   })
+
 });
-
-
-
-
-
-
-//takes in tweet obj and returns a tweet article (see html)
