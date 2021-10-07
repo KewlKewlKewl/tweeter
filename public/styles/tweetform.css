@@ -1,4 +1,4 @@
-.new-tweet form {
+.tweets form {
   border-style: solid;
 }
 
@@ -8,18 +8,18 @@ section .form-details {
   align-items: flex-end;
 }
 
-.new-tweet button {
+.tweets button {
   font-family: 'Bungee', sans-serif;
   background-color: lightsalmon;
   color: snow;
 }
 
-.new-tweet label {
+.tweets label {
   color: black;
   font-weight: bold;
 }
 
-.new-tweet .counter {
+.tweets .counter {
   font-family: "Bungee", sans-serif;
 }
 
@@ -27,4 +27,8 @@ section .form-details {
   display: flex;
   width: 100%;
   height: 100%;
+}
+
+.negative {
+  color: red;
 }

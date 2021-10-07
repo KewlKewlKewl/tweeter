@@ -6,17 +6,20 @@ nav {
   padding-left: 1.5em;
   padding-right: 1.5em;
   z-index: 1;
-  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  top: 0;
+  position: fixed;
 }
 
 #logo {
   font-family: 'Bungee', sans-serif;
   font-size: 48px;
-  display: flex;
-  
 }
 
-.nav-info {
+.nav-content {
   display: flex;
-  justify-content: flex-end;
+  flex-direction: column;
+  align-items: center;
 }
