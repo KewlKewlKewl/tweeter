@@ -1,0 +1,28 @@
+@media only screen and (min-width: 1024px) {
+  .responsive-design {
+    display: flex;
+    position: relative;
+    top: 100px;
+  }
+
+  .main-header {
+    width: 70% !important;
+    background-color:snow !important;
+  }
+
+  .avatar {
+    background-color: lightseagreen;
+    width: 602px !important;
+    height: 350px !important;
+    margin-left: 50px;
+  }
+
+  .name {
+    background-color: lightseagreen;
+    width: 602px !important;
+    margin-left: 50px;
+  }
+  .container {
+    padding-right: 50px;
+  }
+ }

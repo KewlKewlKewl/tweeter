@@ -21,6 +21,7 @@
   padding-left: .5em;
   padding-right: .5em;
   margin-bottom: 15px;
+  overflow-wrap: anywhere;
 }
 
 .tweet-footer {
@@ -59,8 +60,8 @@
   color: lightseagreen;
 }
 
-.fa-feather{
-  margin-top: 30px;
-  padding-right: 8px;
-  color:lightseagreen;
+.small-avatar{
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-right: 10px;
 }

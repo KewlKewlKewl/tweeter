@@ -8,6 +8,12 @@ $(document).ready(function() {
   $("#error-char").hide();
   $("#error-blank").hide();
 
+  const escape = function (str) {
+    let div = document.createElement("div");
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  };
+
   const renderTweets = function(tweets) {
     const sortedTweets = tweets.sort((a,b) => b.created_at - a.created_at);
     for (const tweet of sortedTweets) {
@@ -21,12 +27,12 @@ $(document).ready(function() {
     <header>
       <div class="header-info">
         <div class="user">
-          <i class="fas fa-feather"></i>
+          <img src=${tweetObj.user.avatars} class="small-avatar">
           <h3 class="user-info">${tweetObj.user.name}</h3>
         </div>
         <h3 class="user-info">${tweetObj.user.handle}</h3>
       </div>
-      <div class="tweet-content">${tweetObj.content.text}</div>
+      <div class="tweet-content">${escape(tweetObj.content.text)}</div>
     </header>
     <footer class="tweet-footer">
       <p>${timeago.format(tweetObj.created_at)}</p>
@@ -87,6 +93,10 @@ $(document).ready(function() {
       })
     }
   });
+
+  $(".nav-content").on("click", (event) => { //event handler for write a new tweet-. Will focus in on the tweet form
+    $("#tweet-text").focus();
+  })
 
 });
 
