@@ -4,16 +4,19 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
+
 $(document).ready(function() {
   $("#error-char").hide();
   $("#error-blank").hide();
 
+  //HTML content check for tweets. Allows HTML code to be posted in tweets.
   const escape = function (str) {
     let div = document.createElement("div");
     div.appendChild(document.createTextNode(str));
     return div.innerHTML;
-  };
+  }
 
+  //Helper function to be called on loadTweets. Once tweet data is gathered via loadTweets GET request, this functions sorts the tweets and composeses them. 
   const renderTweets = function(tweets) {
     const sortedTweets = tweets.sort((a,b) => b.created_at - a.created_at);
     for (const tweet of sortedTweets) {
@@ -21,6 +24,7 @@ $(document).ready(function() {
     };
   }
   
+  //Function which takes in a tweet object and enters the data into HTML. Helper function which helps to render tweets.
   const createTweetElement = function(tweetObj) {
     const $tweet = 
     $(`<br><article class="posted-tweet">
@@ -46,30 +50,32 @@ $(document).ready(function() {
     
     return $tweet;
   }
-
+  
+  //Function which handles GET requests via AJAX to tweet database (/tweets). Sends the tweet data through the renderTweets function to display tweets.
   const loadTweets = function() {
     const url = "http://localhost:8080/tweets";
-    $.ajax({ //this AJAX get request will return a promise object with a success or e (a resolved or rejected promise respectively). If resvoled, .then will be called to return/access the promise objects value (the success object which is a array of tweets). If not the catch e wil be called on the rejected promise to return/acess the error value
+    $.ajax({
       url: url,
       method: "GET"
     })
-    .then((success) => { //If promise is resolved (is successfull) unrwapre promise object to return success value. Will be the tweets from the /tweest page. WE CAN NOW PASS THIS INTO THE renderTweets function as data (via return sucess;) AND CREATE TWEETS FROM OUR DB.
-      $('.tweets-container').empty(); //this makes the DOM Re-render to feed into the renderTweets
-      renderTweets(success); //best practice call the function in the .then if u wanna carry over data. This will help you better error handle. ALso for some reason i could not pass loadTweets() in render
-    }) // YOU NEED TO CALL RENDER TWEETS HERE BECUASE IF YOU PASS THIS INTO RENDER TWEETS OUTSIDE OF HTE FUNCTION THE SUCESS DATA WONT BE TRANSFERRED BACK OUT (THESE ARE ASYNCS)
+    .then((success) => {
+      $('.tweets-container').empty();
+      renderTweets(success);
+    })
     .catch((e) => {
       return e;
     });
   }
 
- loadTweets();
+  loadTweets();
 
+ //Function to handle Tweet Submission via AJAX.
   $("form").submit(function(event) {
     event.preventDefault();
     const characterCounter = $(".counter").val();
     const textAreaMsg = $("#tweet-text").val();
 
-    //error check
+    //Error handling on tweet submission.
     if (characterCounter < 0) {
       $("#error-char").show(500);
     } else if (textAreaMsg === "") {
@@ -81,30 +87,23 @@ $(document).ready(function() {
       const url = "http://localhost:8080/tweets";
       const serialData = $(this).serialize();
 
-      $.ajax({ //ajax POST request using AJAX call and pormises.Will execute then on sucess. We dont even need to pass in "succes into then" =-> this is just a promise that will execute then if the post request above goes good. This is aying if post method is good loadtweets to empty tweet container and render tweets. THIS IS DONE EVERY POST, THEREFOR CREATING A SPA REFRESH/DYNAMIC REFRESH
+      //AJAX POST request. Will clear up text and counter values in tweet form and reload tweets on successful tweet submission/POST.
+      $.ajax({
         url: url,
         method: "POST",
         data: serialData
       })
-      .then((success) => { //on successfull POST call -> load the tweets which means to call the load tweets function (which means to empty posted tweet + section tweet container html section + render your tweets agian with new tweet). THIS ALLOWS FOR DYNMIAC REFRESH IN AJAX
+      .then((success) => {
         loadTweets(); 
-        $('#tweet-text').val(''); //this will clear your text field on POST
-        $('.counter').val("140"); //this will set your coutner back to 140 on POST ALL OF THIS STUFF WORKS TOGETHER TO MAKE A SPA LOOK DYNMIAC AND CREATE A DYNMIAC REFRESH OF TWEETS/DATA
+        $('#tweet-text').val('');
+        $('.counter').val("140"); 
       })
     }
   });
 
-  $(".nav-content").on("click", (event) => { //event handler for write a new tweet-. Will focus in on the tweet form
+  //Event handler for write a new tweet in NAV. On click will focus in on the tweet form.
+  $(".nav-content").on("click", (event) => { 
     $("#tweet-text").focus();
-  })
+  });
 
 });
-
-// MENTOR CODE
-// $.ajax('/tweets', {method: "POST", data: serialData })  
-// .then(() => { 
-//   loadTweets(); 
-//   $('#tweet-text').val('');
-//   $('.counter').val("140");
-// });
-      
