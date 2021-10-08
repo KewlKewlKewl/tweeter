@@ -21,8 +21,6 @@
   padding-left: .5em;
   padding-right: .5em;
   margin-bottom: 15px;
-  display: flex;
-  justify-content: flex-start
 }
 
 .tweet-footer {
