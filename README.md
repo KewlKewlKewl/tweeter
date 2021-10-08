@@ -8,11 +8,11 @@ Users will be able to post fun tweets to see how a simple SPA (Single Page Appli
 
 ## Final Product
 
-!["Desktop Design"](https://github.com/KewlKewlKewl/tinyapp/blob/master/docs/urls-index.png?raw=true)
+!["Desktop Design"](https://github.com/KewlKewlKewl/tweeter/blob/master/docs/Desktop%20Design.png?raw=true)
 
-!["Mobile Design"](https://github.com/KewlKewlKewl/tinyapp/blob/master/docs/urls-single.png?raw=true)
+!["Mobile Design"](https://github.com/KewlKewlKewl/tweeter/blob/master/docs/Error%20Handling.png?raw=true)
 
-!["Error Handling"](https://github.com/KewlKewlKewl/tinyapp/blob/master/docs/urls-single.png?raw=true)
+!["Error Handling"](https://github.com/KewlKewlKewl/tweeter/blob/master/docs/mobile%20design.png?raw=true)
 
 ## Getting Started
 
